@@ -14,5 +14,6 @@ RUN echo 'nobody:x:65534:65534:Nobody:/:/sbin/nologin' >> /etc/passwd && \
 EXPOSE 2222
 VOLUME /var/lib/gitolite
 COPY start /usr/local/bin
+USER gitolite
 
 CMD start
