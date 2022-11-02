@@ -7,7 +7,7 @@ ARG GITOLITE_VERSION=master
 RUN apt-get update && \
     apt-get -y install openssh-server git && \
     apt-get clean && \
-    useradd -r -u 196 -d /var/lib/gitolite gitolite && \
+    useradd -r -u 196 -d /var/lib/gitolite -m gitolite && \
     mkdir /usr/local/gitolite && \
     git clone --depth 1 -b $GITOLITE_VERSION $GITOLITE_REPO /tmp/gitolite && \
     /tmp/gitolite/install -to /usr/local/gitolite && \
