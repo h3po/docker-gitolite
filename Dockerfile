@@ -17,7 +17,7 @@ RUN apt-get update && \
 EXPOSE 2222
 VOLUME /var/lib/gitolite
 WORKDIR /var/lib/gitolite
-COPY start /usr/local/bin
+COPY start.sh /usr/local/bin
 USER gitolite
 
-CMD start
+CMD start.sh
