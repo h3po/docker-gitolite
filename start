@@ -15,4 +15,4 @@ umask $UMASK
 
 [ -e projects.list ] || gitolite setup -pk "$PK_PATH"
 
-exec /usr/bin/sshd -eD -p 2222 -o PasswordAuthentication=no -o UsePrivilegeSeparation=no -o PidFile=none $HOST_KEYS
+exec /usr/sbin/sshd -eD -p 2222 -o PasswordAuthentication=no -o UsePrivilegeSeparation=no -o PidFile=none $HOST_KEYS
