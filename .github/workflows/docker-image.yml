@@ -5,6 +5,8 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  schedule:
+    - cron:  '0 0 * * *'
 
 env:
   REGISTRY: ghcr.io
@@ -22,7 +24,7 @@ jobs:
       uses: lucacome/docker-image-update-checker@v1.1.1
       with:
         base-image: debian:stable-slim
-        image: $IMAGE_NAME
+        image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
     
     - name: Docker meta
       id: meta
