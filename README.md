@@ -1,5 +1,5 @@
-# docker-gitolite
-gitolite service based on debian:stable-slim
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/h3po/docker-gitolite/Docker%20Image%20CI)
+![Docker Image Version](https://ghcr-badge.deta.dev/h3po/gitolite/latest_tag?trim=major&label=latest)
 
 ### Usage
 Persistent data is stored in `/var/lib/gitolite`. If the directory is empty, the start.sh script will run `gitolite setup` which then creates your gitolite-admin repository. You need to temporarily mount your ssh public key into the container and point the `PK_PATH` environment variable to it so gitolite cat setup your user for access to the admin repository.
