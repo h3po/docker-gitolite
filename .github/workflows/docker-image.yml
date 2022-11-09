@@ -6,15 +6,40 @@ on:
   pull_request:
     branches: [ "master" ]
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository.owner }}/gitolite
+
 jobs:
 
-  build:
-
+  docker:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
+    
+    - name: Docker meta
+      id: meta
+      uses: docker/metadata-action@v4
+      with:
+        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+        
+    - name: Login to image repository
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GHCR_TOKEN }}
+          
     - name: Get the latest gitolite release tag
       run: echo "GITOLITE_VERSION=$(curl -s 'https://api.github.com/repos/sitaramc/gitolite/tags' | jq -r .[0].name)" >> $GITHUB_ENV
-    - name: Build the Docker image
-      run: docker build --build-arg GITOLITE_VERSION="$GITOLITE_VERSION" --tag gitolite:"$GITOLITE_VERSION" --tag gitolite:latest --file Dockerfile .
+  
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v3
+      with:
+        context: .
+        push: true
+        labels: ${{ steps.meta.outputs.labels }}
+        tags: |
+          latest
+          $GITOLITE_VERSION
+        build-args: GITOLITE_VERSION="$GITOLITE_VERSION"
