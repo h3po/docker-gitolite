@@ -26,6 +26,13 @@ jobs:
     - name: Get the latest gitolite release tag
       run: echo "GITOLITE_VERSION=$(curl -s 'https://api.github.com/repos/sitaramc/gitolite/tags' | jq -r .[0].name)" >> $GITHUB_ENV
   
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+  
     - name: Build and push Docker image
       uses: docker/build-push-action@v3
       with:
