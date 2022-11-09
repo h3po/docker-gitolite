@@ -17,4 +17,4 @@ jobs:
     - name: Get the latest gitolite release tag
       run: echo "GITOLITE_VERSION=$(curl -s 'https://api.github.com/repos/sitaramc/gitolite/tags' | jq -r .[0].name)" >> $GITHUB_ENV
     - name: Build the Docker image
-      run: docker build --build-arg GITOLITE_VERSION="${{ GITOLITE_VERSION }}" --tag gitolite:"${{ GITOLITE_VERSION }}" --tag gitolite:latest --file Dockerfile .
+      run: docker build --build-arg GITOLITE_VERSION="$GITOLITE_VERSION" --tag gitolite:"$GITOLITE_VERSION" --tag gitolite:latest --file Dockerfile .
