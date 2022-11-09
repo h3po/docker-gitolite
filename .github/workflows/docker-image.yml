@@ -35,4 +35,4 @@ jobs:
         tags: |
           latest
           ${{ env.GITOLITE_VERSION }}
-        build-args: GITOLITE_VERSION="${{ env.GITOLITE_VERSION }}"
+        build-args: GITOLITE_VERSION=${{ env.GITOLITE_VERSION }}
