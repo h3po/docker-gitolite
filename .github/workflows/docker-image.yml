@@ -34,5 +34,5 @@ jobs:
         labels: ${{ steps.meta.outputs.labels }}
         tags: |
           latest
-          $GITOLITE_VERSION
-        build-args: GITOLITE_VERSION="$GITOLITE_VERSION"
+          ${{ env.GITOLITE_VERSION }}
+        build-args: GITOLITE_VERSION="${{ env.GITOLITE_VERSION }}"
