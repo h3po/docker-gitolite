@@ -33,6 +33,6 @@ jobs:
         push: true
         labels: ${{ steps.meta.outputs.labels }}
         tags: |
-          latest
-          ${{ env.GITOLITE_VERSION }}
+          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITOLITE_VERSION }}
         build-args: GITOLITE_VERSION=${{ env.GITOLITE_VERSION }}
