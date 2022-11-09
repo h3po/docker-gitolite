@@ -17,14 +17,23 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
+    - name: Docker Image Update Checker
+      id: updatecheck
+      uses: lucacome/docker-image-update-checker@v1.1.1
+      with:
+        base-image: debian:stable-slim
+        image: $IMAGE_NAME
+    
     - name: Docker meta
       id: meta
       uses: docker/metadata-action@v4
       with:
         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+      if: steps.updatecheck.outputs.needs-updating == 'true'
                  
     - name: Get the latest gitolite release tag
       run: echo "GITOLITE_VERSION=$(curl -s 'https://api.github.com/repos/sitaramc/gitolite/tags' | jq -r .[0].name)" >> $GITHUB_ENV
+      if: steps.updatecheck.outputs.needs-updating == 'true'
   
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v2
@@ -32,6 +41,7 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
+      if: steps.updatecheck.outputs.needs-updating == 'true'
   
     - name: Build and push Docker image
       uses: docker/build-push-action@v3
@@ -43,3 +53,4 @@ jobs:
           ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GITOLITE_VERSION }}
         build-args: GITOLITE_VERSION=${{ env.GITOLITE_VERSION }}
+      if: steps.updatecheck.outputs.needs-updating == 'true'
