@@ -17,11 +17,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-  - name: updatecheck
-    uses: mkumatag/container-image-updater-action@v1.0.5
-    with:
-      base-image: debian:stable-slim
-      image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+    - name: updatecheck
+      uses: mkumatag/container-image-updater-action@v1.0.5
+      with:
+        base-image: debian:stable-slim
+        image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
     
     - name: Docker meta
       id: meta
